@@ -1,0 +1,117 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 750px;
+            background-color: white;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"font": {"color": "black"}, "id": "Graham Richards", "label": "Graham Richards", "shape": "dot", "size": 1, "title": "Graham Richards Neighbors:\u003cbr\u003eDavid Huggins\u003cbr\u003eGraham Worth\u003cbr\u003eAdrian Mulholland\u003cbr\u003eJonathan Essex", "value": 4}, {"font": {"color": "black"}, "id": "David Huggins", "label": "David Huggins", "shape": "dot", "size": 1, "title": "David Huggins Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Thomas Woolf", "label": "Thomas Woolf", "shape": "dot", "size": 1, "title": "Thomas Woolf Neighbors:\u003cbr\u003eLucy Forrest", "value": 1}, {"font": {"color": "black"}, "id": "Mark Sansom", "label": "Mark Sansom", "shape": "dot", "size": 1, "title": "Mark Sansom Neighbors:\u003cbr\u003eSonya Hanson\u003cbr\u003eDaniel Parton\u003cbr\u003eSyma Khalid\u003cbr\u003eLucy Forrest", "value": 4}, {"font": {"color": "black"}, "id": "David Mobley", "label": "David Mobley", "shape": "dot", "size": 1, "title": "David Mobley Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Richard Friesner", "label": "Richard Friesner", "shape": "dot", "size": 1, "title": "Richard Friesner Neighbors:\u003cbr\u003eMichael Shirts\u003cbr\u003eRobert Abel", "value": 2}, {"font": {"color": "black"}, "id": "Martin Karplus", "label": "Martin Karplus", "shape": "dot", "size": 1, "title": "Martin Karplus Neighbors:\u003cbr\u003eBruce Tidor\u003cbr\u003eArieh Warshel\u003cbr\u003eAdrian Mulholland\u003cbr\u003eAndrew McCammon", "value": 4}, {"font": {"color": "black"}, "id": "Rebecca Wade", "label": "Rebecca Wade", "shape": "dot", "size": 1, "title": "Rebecca Wade Neighbors:\u003cbr\u003eGraham Worth", "value": 1}, {"font": {"color": "black"}, "id": "Graham Worth", "label": "Graham Worth", "shape": "dot", "size": 1, "title": "Graham Worth Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Syma Khalid", "label": "Syma Khalid", "shape": "dot", "size": 1, "title": "Syma Khalid Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Julien Michel", "label": "Julien Michel", "shape": "dot", "size": 1, "title": "Julien Michel Neighbors:\u003cbr\u003eAntonia Mey", "value": 1}, {"font": {"color": "black"}, "id": "Sonya Hanson", "label": "Sonya Hanson", "shape": "dot", "size": 1, "title": "Sonya Hanson Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Michael Shirts", "label": "Michael Shirts", "shape": "dot", "size": 1, "title": "Michael Shirts Neighbors:\u003cbr\u003eLevi Naden", "value": 1}, {"font": {"color": "black"}, "id": "Lucy Forrest", "label": "Lucy Forrest", "shape": "dot", "size": 1, "title": "Lucy Forrest Neighbors:\u003cbr\u003eRichard Bradshaw", "value": 1}, {"font": {"color": "black"}, "id": "Lenz Cederbaum", "label": "Lenz Cederbaum", "shape": "dot", "size": 1, "title": "Lenz Cederbaum Neighbors:\u003cbr\u003eGraham Worth", "value": 1}, {"font": {"color": "black"}, "id": "Michael Gilson", "label": "Michael Gilson", "shape": "dot", "size": 1, "title": "Michael Gilson Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Barry Honig", "label": "Barry Honig", "shape": "dot", "size": 1, "title": "Barry Honig Neighbors:\u003cbr\u003eMichael Gilson\u003cbr\u003eLucy Forrest", "value": 2}, {"font": {"color": "black"}, "id": "Joachim Frank", "label": "Joachim Frank", "shape": "dot", "size": 1, "title": "Joachim Frank Neighbors:\u003cbr\u003eSonya Hanson", "value": 1}, {"font": {"color": "black"}, "id": "John Chodera", "label": "John Chodera", "shape": "dot", "size": 1, "title": "John Chodera Neighbors:\u003cbr\u003eSonya Hanson\u003cbr\u003eHannah Bruce Macdonald\u003cbr\u003eSteven Albanese\u003cbr\u003eDaniel Parton\u003cbr\u003eGregory Ross\u003cbr\u003ePatrick Grinaway\u003cbr\u003eKyle Beauchamp\u003cbr\u003eLevi Naden", "value": 8}, {"font": {"color": "black"}, "id": "John Walker", "label": "John Walker", "shape": "dot", "size": 1, "title": "John Walker Neighbors:\u003cbr\u003eLucy Forrest", "value": 1}, {"font": {"color": "black"}, "id": "Kyle Beauchamp", "label": "Kyle Beauchamp", "shape": "dot", "size": 1, "title": "Kyle Beauchamp Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Mark Rodger.", "label": "Mark Rodger.", "shape": "dot", "size": 1, "title": "Mark Rodger. Neighbors:\u003cbr\u003eSyma Khalid", "value": 1}, {"font": {"color": "black"}, "id": "Daniel L. Cox", "label": "Daniel L. Cox", "shape": "dot", "size": 1, "title": "Daniel L. Cox Neighbors:\u003cbr\u003eDavid Mobley", "value": 1}, {"font": {"color": "black"}, "id": "Richard Bradshaw", "label": "Richard Bradshaw", "shape": "dot", "size": 1, "title": "Richard Bradshaw Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Christopher Cave-Ayland", "label": "Christopher Cave-Ayland", "shape": "dot", "size": 1, "title": "Christopher Cave-Ayland Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Andrew McCammon", "label": "Andrew McCammon", "shape": "dot", "size": 1, "title": "Andrew McCammon Neighbors:\u003cbr\u003eRichard Henchman\u003cbr\u003eMichael Gilson", "value": 2}, {"font": {"color": "black"}, "id": "William Jorgensen", "label": "William Jorgensen", "shape": "dot", "size": 1, "title": "William Jorgensen Neighbors:\u003cbr\u003eDaniel Cole\u003cbr\u003eJonathan Essex\u003cbr\u003eJulien Michel", "value": 3}, {"font": {"color": "black"}, "id": "Bert de Groot", "label": "Bert de Groot", "shape": "dot", "size": 1, "title": "Bert de Groot Neighbors:\u003cbr\u003eMatteo Aldeghi", "value": 1}, {"font": {"color": "black"}, "id": "Steven Albanese", "label": "Steven Albanese", "shape": "dot", "size": 1, "title": "Steven Albanese Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Daniel Parton", "label": "Daniel Parton", "shape": "dot", "size": 1, "title": "Daniel Parton Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Gregory Ross", "label": "Gregory Ross", "shape": "dot", "size": 1, "title": "Gregory Ross Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Patrick Grinaway", "label": "Patrick Grinaway", "shape": "dot", "size": 1, "title": "Patrick Grinaway Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Bruce Tidor", "label": "Bruce Tidor", "shape": "dot", "size": 1, "title": "Bruce Tidor Neighbors:\u003cbr\u003eDavid Huggins", "value": 1}, {"font": {"color": "black"}, "id": "Matteo Aldeghi", "label": "Matteo Aldeghi", "shape": "dot", "size": 1, "title": "Matteo Aldeghi Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Antonia Mey", "label": "Antonia Mey", "shape": "dot", "size": 1, "title": "Antonia Mey Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Robert Abel", "label": "Robert Abel", "shape": "dot", "size": 1, "title": "Robert Abel Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Hannah Bruce Macdonald", "label": "Hannah Bruce Macdonald", "shape": "dot", "size": 1, "title": "Hannah Bruce Macdonald Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Christopher Woods", "label": "Christopher Woods", "shape": "dot", "size": 1, "title": "Christopher Woods Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Daniel Cole", "label": "Daniel Cole", "shape": "dot", "size": 1, "title": "Daniel Cole Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "John Deutch", "label": "John Deutch", "shape": "dot", "size": 1, "title": "John Deutch Neighbors:\u003cbr\u003eAndrew McCammon", "value": 1}, {"font": {"color": "black"}, "id": "Ken Dill", "label": "Ken Dill", "shape": "dot", "size": 1, "title": "Ken Dill Neighbors:\u003cbr\u003eDavid Mobley\u003cbr\u003eJohn Chodera", "value": 2}, {"font": {"color": "black"}, "id": "Adrian Mulholland", "label": "Adrian Mulholland", "shape": "dot", "size": 1, "title": "Adrian Mulholland Neighbors:\u003cbr\u003eChristopher Woods", "value": 1}, {"font": {"color": "black"}, "id": "Phil Biggin", "label": "Phil Biggin", "shape": "dot", "size": 1, "title": "Phil Biggin Neighbors:\u003cbr\u003eGregory Ross\u003cbr\u003eMatteo Aldeghi", "value": 2}, {"font": {"color": "black"}, "id": "Jonathan Essex", "label": "Jonathan Essex", "shape": "dot", "size": 1, "title": "Jonathan Essex Neighbors:\u003cbr\u003eChristopher Cave-Ayland\u003cbr\u003eHannah Bruce Macdonald\u003cbr\u003eChristopher Woods\u003cbr\u003eGregory Ross\u003cbr\u003eRichard Bradshaw\u003cbr\u003eRichard Henchman\u003cbr\u003eJulien Michel", "value": 7}, {"font": {"color": "black"}, "id": "Mike Payne", "label": "Mike Payne", "shape": "dot", "size": 1, "title": "Mike Payne Neighbors:\u003cbr\u003eDaniel Cole", "value": 1}, {"font": {"color": "black"}, "id": "Arieh Warshel", "label": "Arieh Warshel", "shape": "dot", "size": 1, "title": "Arieh Warshel Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Richard Henchman", "label": "Richard Henchman", "shape": "dot", "size": 1, "title": "Richard Henchman Neighbors:\u003cbr\u003e", "value": 0}, {"font": {"color": "black"}, "id": "Vijay Pande", "label": "Vijay Pande", "shape": "dot", "size": 1, "title": "Vijay Pande Neighbors:\u003cbr\u003eMichael Shirts\u003cbr\u003eJohn Chodera\u003cbr\u003eKyle Beauchamp", "value": 3}, {"font": {"color": "black"}, "id": "Shneior Lifson", "label": "Shneior Lifson", "shape": "dot", "size": 1, "title": "Shneior Lifson Neighbors:\u003cbr\u003eArieh Warshel", "value": 1}, {"font": {"color": "black"}, "id": "Rajiv Singh", "label": "Rajiv Singh", "shape": "dot", "size": 1, "title": "Rajiv Singh Neighbors:\u003cbr\u003eDavid Mobley", "value": 1}, {"font": {"color": "black"}, "id": "Levi Naden", "label": "Levi Naden", "shape": "dot", "size": 1, "title": "Levi Naden Neighbors:\u003cbr\u003e", "value": 0}]);
+        edges = new vis.DataSet([{"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Jonathan Essex", "to": "Hannah Bruce Macdonald"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "John Chodera", "to": "Hannah Bruce Macdonald"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Ken Dill", "to": "John Chodera"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Vijay Pande", "to": "John Chodera"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Graham Richards", "to": "Jonathan Essex"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "William Jorgensen", "to": "Jonathan Essex"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Jonathan Essex", "to": "Julien Michel"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "William Jorgensen", "to": "Julien Michel"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Vijay Pande", "to": "Michael Shirts"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Richard Friesner", "to": "Michael Shirts"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Daniel L. Cox", "to": "David Mobley"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Rajiv Singh", "to": "David Mobley"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Ken Dill", "to": "David Mobley"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Mark Rodger.", "to": "Syma Khalid"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Mark Sansom", "to": "Syma Khalid"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Jonathan Essex", "to": "Richard Henchman"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Andrew McCammon", "to": "Richard Henchman"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Mark Sansom", "to": "Lucy Forrest"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Thomas Woolf", "to": "Lucy Forrest"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "John Walker", "to": "Lucy Forrest"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Barry Honig", "to": "Lucy Forrest"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Phil Biggin", "to": "Gregory Ross"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Jonathan Essex", "to": "Gregory Ross"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "John Chodera", "to": "Gregory Ross"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Jonathan Essex", "to": "Richard Bradshaw"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Lucy Forrest", "to": "Richard Bradshaw"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "John Chodera", "to": "Patrick Grinaway"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Michael Shirts", "to": "Levi Naden"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "John Chodera", "to": "Levi Naden"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Mark Sansom", "to": "Sonya Hanson"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "John Chodera", "to": "Sonya Hanson"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Joachim Frank", "to": "Sonya Hanson"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Mark Sansom", "to": "Daniel Parton"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "John Chodera", "to": "Daniel Parton"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Vijay Pande", "to": "Kyle Beauchamp"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "John Chodera", "to": "Kyle Beauchamp"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Phil Biggin", "to": "Matteo Aldeghi"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Bert de Groot", "to": "Matteo Aldeghi"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Julien Michel", "to": "Antonia Mey"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Jonathan Essex", "to": "Christopher Woods"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Adrian Mulholland", "to": "Christopher Woods"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Graham Richards", "to": "Adrian Mulholland"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Martin Karplus", "to": "Adrian Mulholland"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "John Chodera", "to": "Steven Albanese"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Graham Richards", "to": "Graham Worth"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Rebecca Wade", "to": "Graham Worth"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Lenz Cederbaum", "to": "Graham Worth"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Jonathan Essex", "to": "Christopher Cave-Ayland"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Graham Richards", "to": "David Huggins"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Bruce Tidor", "to": "David Huggins"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Martin Karplus", "to": "Bruce Tidor"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Andrew McCammon", "to": "Michael Gilson"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Barry Honig", "to": "Michael Gilson"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Mike Payne", "to": "Daniel Cole"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "William Jorgensen", "to": "Daniel Cole"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Richard Friesner", "to": "Robert Abel"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "John Deutch", "to": "Andrew McCammon"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Martin Karplus", "to": "Andrew McCammon"}, {"arrow": true, "arrows": "to", "color": "blueviolet", "from": "Shneior Lifson", "to": "Arieh Warshel"}, {"arrow": true, "arrows": "to", "color": "magenta", "from": "Martin Karplus", "to": "Arieh Warshel"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -80000,
+            "springConstant": 0.001,
+            "springLength": 250
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        // default to using dot shape for nodes
+        options.nodes = {
+            shape: "dot"
+        }
+        
+
+        network = new vis.Network(container, data, options);
+
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
