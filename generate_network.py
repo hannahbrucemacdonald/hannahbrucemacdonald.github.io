@@ -14,7 +14,7 @@ people = data['Person']
 supervisors = data['Supervisor']
 jobtype = data['Type']
 
-color = {'PhD' : 'blueviolet' , 'postdoc' : 'magenta'}
+color = {'PhD' : 'blueviolet' , 'postdoc' : 'magenta' , 'link' : 'turquoise'}
 
 all_people = set(list(people)+list(supervisors))
 #node_size = Counter(supervisors)
@@ -23,7 +23,8 @@ for person in all_people:
     net.add_node(person, title=person,size=5) #,shape='ellipse')
 
 for person, supervisor, job in zip(people,supervisors, jobtype):
-    net.add_edge(supervisor, person, arrow=True,color=color[job])
+    if job != 'link':
+        net.add_edge(supervisor, person, arrow=True,color=color[job])
 
 neighbor_map = net.get_adj_list()
 
@@ -34,5 +35,10 @@ for node in net.nodes:
     if num > 0: 
         node["title"] += " Students:<br>" + "<br>".join(neighbor_map[node["id"]])
     node["value"] = num 
+
+for person, supervisor, job in zip(people,supervisors, jobtype):
+    if job == 'link':
+        net.add_edge(supervisor, person, arrow=False,color=color[job],arrowStrikethrough=True)
+        net.add_edge(person, supervisor, arrow=False,color=color[job],arrowStrikethrough=True)
 
 net.show("index.html")
